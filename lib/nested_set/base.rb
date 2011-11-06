@@ -26,6 +26,15 @@ module NestedSet
           include Columns
           extend Columns
           extend ClassMethods
+          
+          # no assignment to structure fields
+          [left_column_name, right_column_name].each do |column|
+            module_eval <<-"end_eval", __FILE__, __LINE__
+              def #{column}=(x)
+                raise ActiveRecord::ActiveRecordError, "Unauthorized assignment to #{column}: it's an internal field handled by acts_as_nested_set code, use move_to_* methods instead."
+              end
+            end_eval
+          end
         end
       end
     end

@@ -91,7 +91,7 @@ class NestedSetTest < ActiveSupport::TestCase
     assert_equal quoted, Default.quoted_depth_column_name
     assert_equal quoted, Default.new.quoted_depth_column_name
   end
-=begin
+
   def test_left_column_protected_from_assignment
     assert_raises(ActiveRecord::ActiveRecordError) { Category.new.lft = 1 }
   end
@@ -99,7 +99,7 @@ class NestedSetTest < ActiveSupport::TestCase
   def test_right_column_protected_from_assignment
     assert_raises(ActiveRecord::ActiveRecordError) { Category.new.rgt = 1 }
   end
-
+=begin
   def test_colums_protected_on_initialize
     c = Category.new(:lft => 1, :rgt => 2)
     assert_nil c.lft
