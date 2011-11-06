@@ -8,8 +8,11 @@ module NestedSet
     module SingletonMethods
       # Configuration options are:
       #
+      # * +:parent_column+ - specifies the column name to use for keeping the position integer (default: parent_id)
       # * +:left_column+ - column name for left boundry data, default "lft"
       # * +:right_column+ - column name for right boundry data, default "rgt"
+      # * +:depth_column+ - column name for level cache data, default "depth"
+      # * +:scope+ - restricts what is to be considered a list.
       def acts_as_nested_set(options = {})
         options = {
           :left_column => "lft",
@@ -26,6 +29,11 @@ module NestedSet
           include Columns
           extend Columns
           extend ClassMethods
+          
+          # no bulk assignment
+          if accessible_attributes.blank?
+            attr_protected  left_column_name.intern, right_column_name.intern
+          end
           
           # no assignment to structure fields
           [left_column_name, right_column_name].each do |column|

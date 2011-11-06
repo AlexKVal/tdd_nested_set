@@ -99,13 +99,13 @@ class NestedSetTest < ActiveSupport::TestCase
   def test_right_column_protected_from_assignment
     assert_raises(ActiveRecord::ActiveRecordError) { Category.new.rgt = 1 }
   end
-=begin
+
   def test_colums_protected_on_initialize
     c = Category.new(:lft => 1, :rgt => 2)
     assert_nil c.lft
     assert_nil c.rgt
   end
-
+=begin
   def test_scoped_appends_id
     assert_equal :organization_id, ScopedCategory.acts_as_nested_set_options[:scope]
   end
