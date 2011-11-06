@@ -17,13 +17,13 @@ end
 class RenamedColumns < ActiveRecord::Base
   acts_as_nested_set :parent_column => 'mother_id', :left_column => 'red', :right_column => 'black', :depth_column => 'level'
 end
-=begin
+
 class NestedSetTest < ActiveSupport::TestCase
 
   def test_left_column_default
     assert_equal 'lft', Default.acts_as_nested_set_options[:left_column]
   end
-
+=begin
   def test_right_column_default
     assert_equal 'rgt', Default.acts_as_nested_set_options[:right_column]
   end
@@ -934,6 +934,5 @@ class NestedSetTest < ActiveSupport::TestCase
 
     assert_equal hash_to_array(Category.arrange), levels
   end
-
-end
 =end
+end

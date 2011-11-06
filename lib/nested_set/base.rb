@@ -6,8 +6,17 @@ module NestedSet
     end
     
     module SingletonMethods
+      # Configuration options are:
+      #
+      # * +:left_column+ - column name for left boundry data, default "lft"
+      # * +:right_column+ - column name for right boundry data, default "rgt"
       def acts_as_nested_set(options = {})
-        #
+        options = {
+          :left_column => "lft"
+        }.merge(options)
+        
+        class_attribute :acts_as_nested_set_options
+        self.acts_as_nested_set_options = options
       end
     end
     
