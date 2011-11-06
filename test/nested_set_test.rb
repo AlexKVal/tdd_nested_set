@@ -35,11 +35,11 @@ class NestedSetTest < ActiveSupport::TestCase
   def test_depth_column_default
     assert_equal 'depth', Default.acts_as_nested_set_options[:depth_column]
   end
-=begin
+
   def test_scope_default
     assert_nil Default.acts_as_nested_set_options[:scope]
   end
-
+=begin
   def test_left_column_default
     assert_equal 'lft', Default.left_column_name
     assert_equal 'lft', Default.new.left_column_name

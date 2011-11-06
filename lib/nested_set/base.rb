@@ -15,7 +15,8 @@ module NestedSet
           :left_column => "lft",
           :right_column => "rgt",
           :parent_column => "parent_id",
-          :depth_column => "depth"
+          :depth_column => "depth",
+          :scope => nil
         }.merge(options)
         
         class_attribute :acts_as_nested_set_options
