@@ -67,7 +67,7 @@ class NestedSetTest < ActiveSupport::TestCase
     assert_equal 'level', RenamedColumns.depth_column_name
     assert_equal 'level', RenamedColumns.new.depth_column_name
   end
-=begin
+
   def test_creation_with_altered_column_names
     assert_nothing_raised do
       RenamedColumns.create!()
@@ -91,7 +91,7 @@ class NestedSetTest < ActiveSupport::TestCase
     assert_equal quoted, Default.quoted_depth_column_name
     assert_equal quoted, Default.new.quoted_depth_column_name
   end
-
+=begin
   def test_left_column_protected_from_assignment
     assert_raises(ActiveRecord::ActiveRecordError) { Category.new.lft = 1 }
   end

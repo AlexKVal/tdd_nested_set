@@ -51,6 +51,18 @@ module NestedSet
       def depth_column_name
         acts_as_nested_set_options[:depth_column]
       end
+      
+      def quoted_left_column_name
+        connection.quote_column_name(left_column_name)
+      end
+      
+      def quoted_right_column_name
+        connection.quote_column_name(right_column_name)
+      end
+      
+      def quoted_depth_column_name
+        connection.quote_column_name(depth_column_name)
+      end
     end
 
     module InstanceMethods
