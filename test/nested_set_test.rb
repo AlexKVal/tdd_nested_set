@@ -46,7 +46,7 @@ class NestedSetTest < ActiveSupport::TestCase
     assert_equal 'red', RenamedColumns.left_column_name
     assert_equal 'red', RenamedColumns.new.left_column_name
   end
-=begin
+
   def test_right_column_name
     assert_equal 'rgt', Default.right_column_name
     assert_equal 'rgt', Default.new.right_column_name
@@ -67,7 +67,7 @@ class NestedSetTest < ActiveSupport::TestCase
     assert_equal 'level', RenamedColumns.depth_column_name
     assert_equal 'level', RenamedColumns.new.depth_column_name
   end
-
+=begin
   def test_creation_with_altered_column_names
     assert_nothing_raised do
       RenamedColumns.create!()

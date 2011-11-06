@@ -39,6 +39,18 @@ module NestedSet
       def left_column_name
         acts_as_nested_set_options[:left_column]
       end
+      
+      def right_column_name
+        acts_as_nested_set_options[:right_column]
+      end
+      
+      def parent_column_name
+        acts_as_nested_set_options[:parent_column]
+      end
+      
+      def depth_column_name
+        acts_as_nested_set_options[:depth_column]
+      end
     end
 
     module InstanceMethods
