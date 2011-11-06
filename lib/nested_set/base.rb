@@ -24,8 +24,8 @@ module NestedSet
 
         unless self.is_a?(ClassMethods)
           include Columns
-          
-
+          extend Columns
+          extend ClassMethods
         end
       end
     end

@@ -41,9 +41,9 @@ class NestedSetTest < ActiveSupport::TestCase
   end
 
   def test_left_column_default
-#    assert_equal 'lft', Default.left_column_name
+    assert_equal 'lft', Default.left_column_name
     assert_equal 'lft', Default.new.left_column_name
-#    assert_equal 'red', RenamedColumns.left_column_name
+    assert_equal 'red', RenamedColumns.left_column_name
     assert_equal 'red', RenamedColumns.new.left_column_name
   end
 =begin
