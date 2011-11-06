@@ -4,7 +4,7 @@ module NestedSet
     def self.included(base)
       base.extend(SingletonMethods)
     end
-    
+
     module SingletonMethods
       # Configuration options are:
       #
@@ -18,19 +18,29 @@ module NestedSet
           :depth_column => "depth",
           :scope => nil
         }.merge(options)
-        
+
         class_attribute :acts_as_nested_set_options
         self.acts_as_nested_set_options = options
+
+        unless self.is_a?(ClassMethods)
+          include Columns
+          
+
+        end
       end
     end
-    
+
     module ClassMethods
       #
     end
-    
-    #module Columns      
-    #end
-    
+
+    # Mixed into both classes and instances to provide easy access to the column names
+    module Columns
+      def left_column_name
+        acts_as_nested_set_options[:left_column]
+      end
+    end
+
     module InstanceMethods
       #
     end

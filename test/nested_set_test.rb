@@ -39,14 +39,14 @@ class NestedSetTest < ActiveSupport::TestCase
   def test_scope_default
     assert_nil Default.acts_as_nested_set_options[:scope]
   end
-=begin
+
   def test_left_column_default
-    assert_equal 'lft', Default.left_column_name
+#    assert_equal 'lft', Default.left_column_name
     assert_equal 'lft', Default.new.left_column_name
-    assert_equal 'red', RenamedColumns.left_column_name
+#    assert_equal 'red', RenamedColumns.left_column_name
     assert_equal 'red', RenamedColumns.new.left_column_name
   end
-
+=begin
   def test_right_column_name
     assert_equal 'rgt', Default.right_column_name
     assert_equal 'rgt', Default.new.right_column_name
