@@ -12,7 +12,10 @@ module NestedSet
       # * +:right_column+ - column name for right boundry data, default "rgt"
       def acts_as_nested_set(options = {})
         options = {
-          :left_column => "lft"
+          :left_column => "lft",
+          :right_column => "rgt",
+          :parent_column => "parent_id",
+          :depth_column => "depth"
         }.merge(options)
         
         class_attribute :acts_as_nested_set_options

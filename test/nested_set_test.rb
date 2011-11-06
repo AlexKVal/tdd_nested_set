@@ -23,7 +23,7 @@ class NestedSetTest < ActiveSupport::TestCase
   def test_left_column_default
     assert_equal 'lft', Default.acts_as_nested_set_options[:left_column]
   end
-=begin
+
   def test_right_column_default
     assert_equal 'rgt', Default.acts_as_nested_set_options[:right_column]
   end
@@ -35,7 +35,7 @@ class NestedSetTest < ActiveSupport::TestCase
   def test_depth_column_default
     assert_equal 'depth', Default.acts_as_nested_set_options[:depth_column]
   end
-
+=begin
   def test_scope_default
     assert_nil Default.acts_as_nested_set_options[:scope]
   end
