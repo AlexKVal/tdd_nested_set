@@ -105,11 +105,11 @@ class NestedSetTest < ActiveSupport::TestCase
     assert_nil c.lft
     assert_nil c.rgt
   end
-=begin
+
   def test_scoped_appends_id
     assert_equal :organization_id, ScopedCategory.acts_as_nested_set_options[:scope]
   end
-
+=begin
   def test_roots_class_method
     assert_equal Category.find_all_by_parent_id(nil), Category.roots
   end

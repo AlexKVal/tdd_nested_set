@@ -12,7 +12,10 @@ module NestedSet
       # * +:left_column+ - column name for left boundry data, default "lft"
       # * +:right_column+ - column name for right boundry data, default "rgt"
       # * +:depth_column+ - column name for level cache data, default "depth"
-      # * +:scope+ - restricts what is to be considered a list.
+      # * +:scope+ - restricts what is to be considered a list. Given a symbol, it'll attach "_id"
+      #   (if it hasn't been already) and use that as the foreign key restriction. You
+      #   can also pass an array to scope by multiple attributes.
+      #   Example: <tt>acts_as_nested_set :scope => [:notable_id, :notable_type]</tt>
       def acts_as_nested_set(options = {})
         options = {
           :left_column => "lft",
@@ -22,8 +25,14 @@ module NestedSet
           :scope => nil
         }.merge(options)
 
+        if options[:scope].is_a?(Symbol) && options[:scope].to_s !~ /_id\z/
+          options[:scope] = "#{options[:scope].to_s}_id".to_sym
+        end
+
         class_attribute :acts_as_nested_set_options
         self.acts_as_nested_set_options = options
+
+
 
         unless self.is_a?(ClassMethods)
           include Columns
