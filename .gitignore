@@ -1,0 +1,12 @@
+## PROJECT::GENERAL
+coverage
+rdoc
+pkg
+
+# PROJECT::SPECIFIC
+awesome_nested_set.sqlite3.db
+test/debug.log
+rdoc
+*.sw?
+.bundle
+
