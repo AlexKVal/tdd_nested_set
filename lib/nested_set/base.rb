@@ -74,7 +74,6 @@ module NestedSet
       def root
         roots.first
       end
-
     end
 
     # Mixed into both classes and instances to provide easy access to the column names
@@ -188,6 +187,11 @@ module NestedSet
         without_self self_and_descendants
       end
 
+      # Returns a set of all of its nested children which do not have children
+      def leaves
+        descendants.where("#{q_right} - #{q_left} = 1")
+      end
+      
       # Returns true is this is a child node
       def child?
         !parent_id.nil?
