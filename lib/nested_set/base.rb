@@ -18,6 +18,7 @@ module NestedSet
       #   Example: <tt>acts_as_nested_set :scope => [:notable_id, :notable_type]</tt>
       def acts_as_nested_set(options = {})
         options = {
+          :primary_key => self.primary_key,
           :left_column => "lft",
           :right_column => "rgt",
           :parent_column => "parent_id",
@@ -90,6 +91,10 @@ module NestedSet
         acts_as_nested_set_options[:parent_column]
       end
 
+      def primary_key_column_name
+        acts_as_nested_set_options[:primary_key]
+      end
+
       def scope_column_names
         Array(acts_as_nested_set_options[:scope])
       end
@@ -106,8 +111,16 @@ module NestedSet
         connection.quote_column_name(right_column_name)
       end
 
+      def quoted_parent_column_name
+        connection.quote_column_name(parent_column_name)
+      end
+
       def quoted_depth_column_name
         connection.quote_column_name(depth_column_name)
+      end
+
+      def quoted_primary_key_column_name
+        connection.quote_column_name(primary_key_column_name)
       end
     end
 
@@ -139,10 +152,26 @@ module NestedSet
       def leaf?
         !new_record? && (right - left) == 1
       end
-      
+
+      # Returns the array of self and all children
+      def self_and_children
+        nested_set_scope.scoped.
+          where("#{q_parent} = :id or #{q_primary_key} = :id", :id => id)
+      end
+
       # Returns the array of all parents and self
       def self_and_ancestors
         nested_set_scope.where("#{q_left} <= ? AND #{q_right} >= ?", left, right)
+      end
+
+      # Returns a set of itself and all of its nested children
+      def self_and_descendants
+        nested_set_scope.where("#{q_left} >= ? AND #{q_right} <= ?", left, right)
+      end
+
+      # Returns a set of all of its children and nested children
+      def descendants
+        without_self self_and_descendants
       end
 
       # Returns true is this is a child node
@@ -162,7 +191,15 @@ module NestedSet
         def q_parent
           "#{self.class.quoted_table_name}.#{quoted_parent_column_name}"
         end
-        
+
+        def q_primary_key
+          "#{self.class.quoted_table_name}.#{quoted_primary_key_column_name}"
+        end
+
+        def without_self(scope)
+          scope.where("#{quoted_parent_column_name} != ?", self)
+        end
+
         # All nested set queries should use this nested_set_scope, which performs finds on
         # the base ActiveRecord class, using the :scope declared in the acts_as_nested_set
         # declaration.

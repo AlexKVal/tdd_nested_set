@@ -126,7 +126,7 @@ class NestedSetTest < ActiveSupport::TestCase
     assert categories(:top_level).root?
     assert categories(:top_level_2).root?
   end
-=end
+
   def test_leaves_class_method
     assert_equal Category.find(:all, :conditions => "#{Category.right_column_name} - #{Category.left_column_name} = 1"), Category.leaves
     assert_equal Category.leaves.count, 4
@@ -146,17 +146,17 @@ class NestedSetTest < ActiveSupport::TestCase
     assert !categories(:child_2).leaf?
     assert !Category.new.leaf?
   end
-=begin
+
   def test_parent
     assert_equal categories(:child_2), categories(:child_2_1).parent
   end
-
+=end
   def test_self_and_chilren
     node = categories(:top_level)
     self_and_children = [node, categories(:child_1), categories(:child_2), categories(:child_3)]
     assert_equal self_and_children, node.self_and_children
   end
-
+=begin
   def test_self_and_ancestors
     child = categories(:child_2_1)
     self_and_ancestors = [categories(:top_level), categories(:child_2), child]
