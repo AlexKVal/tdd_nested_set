@@ -109,7 +109,7 @@ class NestedSetTest < ActiveSupport::TestCase
   def test_scoped_appends_id
     assert_equal :organization_id, ScopedCategory.acts_as_nested_set_options[:scope]
   end
-=begin
+
   def test_roots_class_method
     assert_equal Category.find_all_by_parent_id(nil), Category.roots
   end
@@ -126,7 +126,7 @@ class NestedSetTest < ActiveSupport::TestCase
     assert categories(:top_level).root?
     assert categories(:top_level_2).root?
   end
-
+=begin
   def test_leaves_class_method
     assert_equal Category.find(:all, :conditions => "#{Category.right_column_name} - #{Category.left_column_name} = 1"), Category.leaves
     assert_equal Category.leaves.count, 4
