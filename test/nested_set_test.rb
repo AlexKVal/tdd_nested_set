@@ -226,7 +226,7 @@ class NestedSetTest < ActiveSupport::TestCase
     category = categories(:top_level)
     category.children.each {|c| assert_equal category.id, c.parent_id }
   end
-=end
+
   def test_is_or_is_ancestor_of?
     assert categories(:top_level).is_or_is_ancestor_of?(categories(:child_1))
     assert categories(:top_level).is_or_is_ancestor_of?(categories(:child_2_1))
@@ -244,7 +244,7 @@ class NestedSetTest < ActiveSupport::TestCase
     assert !categories(:child_1).is_ancestor_of?(categories(:child_2))
     assert !categories(:child_1).is_ancestor_of?(categories(:child_1))
   end
-=begin
+
   def test_is_or_is_ancestor_of_with_scope
     root = ScopedCategory.root
     child = root.children.first
@@ -252,7 +252,7 @@ class NestedSetTest < ActiveSupport::TestCase
     child.update_attribute :organization_id, 'different'
     assert !root.is_or_is_ancestor_of?(child)
   end
-
+=end
   def test_is_or_is_descendant_of?
     assert categories(:child_1).is_or_is_descendant_of?(categories(:top_level))
     assert categories(:child_2_1).is_or_is_descendant_of?(categories(:top_level))
@@ -270,7 +270,7 @@ class NestedSetTest < ActiveSupport::TestCase
     assert !categories(:child_2).is_descendant_of?(categories(:child_1))
     assert !categories(:child_1).is_descendant_of?(categories(:child_1))
   end
-
+=begin
   def test_is_or_is_descendant_of_with_scope
     root = ScopedCategory.root
     child = root.children.first

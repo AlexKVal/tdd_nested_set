@@ -210,14 +210,22 @@ module NestedSet
       def is_or_is_ancestor_of?(other)
         self.left <= other.left && other.left < self.right && same_scope?(other)
       end
-      
+
+      def is_descendant_of?(other)
+        other.descendants.include? self
+      end
+
+      def is_or_is_descendant_of?(other)
+        other.self_and_descendants.include? self
+      end
+
       # Check if other model is in the same scope
       def same_scope?(other)
         scope_column_names.all? do |attr|
           self.send(attr) == other.send(attr)
         end
       end
-      
+
       protected
         def q_left
           "#{self.class.quoted_table_name}.#{quoted_left_column_name}"
