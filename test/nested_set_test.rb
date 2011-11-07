@@ -270,7 +270,7 @@ class NestedSetTest < ActiveSupport::TestCase
     assert !categories(:child_2).is_descendant_of?(categories(:child_1))
     assert !categories(:child_1).is_descendant_of?(categories(:child_1))
   end
-=begin
+
   def test_is_or_is_descendant_of_with_scope
     root = ScopedCategory.root
     child = root.children.first
@@ -286,7 +286,7 @@ class NestedSetTest < ActiveSupport::TestCase
     child.update_attribute :organization_id, 'different'
     assert !child.same_scope?(root)
   end
-
+=begin
   def test_left_sibling
     assert_equal categories(:child_1), categories(:child_2).left_sibling
     assert_equal categories(:child_2), categories(:child_3).left_sibling

@@ -212,11 +212,11 @@ module NestedSet
       end
 
       def is_descendant_of?(other)
-        other.descendants.include? self
+        self.left > other.left && other.right > self.right && same_scope?(other)
       end
 
       def is_or_is_descendant_of?(other)
-        other.self_and_descendants.include? self
+        self.left >= other.left && other.right >= self.right && same_scope?(other)
       end
 
       # Check if other model is in the same scope
