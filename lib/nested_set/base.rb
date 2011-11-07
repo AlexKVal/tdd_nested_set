@@ -173,6 +173,11 @@ module NestedSet
         nested_set_scope.where(parent_column_name => parent_id)
       end
 
+      # Returns the array of all children of the parent, excluding self
+      def siblings
+        without_self self_and_siblings
+      end
+      
       # Returns a set of itself and all of its nested children
       def self_and_descendants
         nested_set_scope.where("#{q_left} >= ? AND #{q_right} <= ?", left, right)
