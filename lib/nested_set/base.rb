@@ -164,6 +164,11 @@ module NestedSet
         nested_set_scope.where("#{q_left} <= ? AND #{q_right} >= ?", left, right)
       end
 
+      # Returns an array of all parents
+      def ancestors
+        without_self self_and_ancestors
+      end
+
       # Returns a set of itself and all of its nested children
       def self_and_descendants
         nested_set_scope.where("#{q_left} >= ? AND #{q_right} <= ?", left, right)
@@ -197,7 +202,7 @@ module NestedSet
         end
 
         def without_self(scope)
-          scope.where("#{quoted_parent_column_name} != ?", self)
+          scope.where("#{q_primary_key} != ?", self)
         end
 
         # All nested set queries should use this nested_set_scope, which performs finds on
