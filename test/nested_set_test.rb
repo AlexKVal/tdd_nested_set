@@ -150,19 +150,18 @@ class NestedSetTest < ActiveSupport::TestCase
   def test_parent
     assert_equal categories(:child_2), categories(:child_2_1).parent
   end
-=end
   def test_self_and_chilren
     node = categories(:top_level)
     self_and_children = [node, categories(:child_1), categories(:child_2), categories(:child_3)]
     assert_equal self_and_children, node.self_and_children
   end
-=begin
+=end
   def test_self_and_ancestors
     child = categories(:child_2_1)
     self_and_ancestors = [categories(:top_level), categories(:child_2), child]
     assert_equal self_and_ancestors, child.self_and_ancestors
   end
-
+=begin
   def test_ancestors
     child = categories(:child_2_1)
     ancestors = [categories(:top_level), categories(:child_2)]
