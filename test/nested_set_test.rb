@@ -19,7 +19,7 @@ class RenamedColumns < ActiveRecord::Base
 end
 
 class NestedSetTest < ActiveSupport::TestCase
-
+=begin
   def test_left_column_default
     assert_equal 'lft', Default.acts_as_nested_set_options[:left_column]
   end
@@ -126,7 +126,7 @@ class NestedSetTest < ActiveSupport::TestCase
     assert categories(:top_level).root?
     assert categories(:top_level_2).root?
   end
-=begin
+=end
   def test_leaves_class_method
     assert_equal Category.find(:all, :conditions => "#{Category.right_column_name} - #{Category.left_column_name} = 1"), Category.leaves
     assert_equal Category.leaves.count, 4
@@ -135,7 +135,7 @@ class NestedSetTest < ActiveSupport::TestCase
     assert Category.leaves.include?(categories(:child_3))
     assert Category.leaves.include?(categories(:top_level_2))
   end
-
+=begin
   def test_leaf
     assert categories(:child_1).leaf?
     assert categories(:child_2_1).leaf?

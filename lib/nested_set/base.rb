@@ -69,6 +69,10 @@ module NestedSet
       def root
         roots.first
       end
+      
+      def leaves
+        find(:all, :conditions => "#{right_column_name} - #{left_column_name} = 1")
+      end
     end
 
     # Mixed into both classes and instances to provide easy access to the column names
@@ -83,6 +87,10 @@ module NestedSet
 
       def parent_column_name
         acts_as_nested_set_options[:parent_column]
+      end
+
+      def scope_column_names
+        Array(acts_as_nested_set_options[:scope])
       end
 
       def depth_column_name
@@ -107,7 +115,7 @@ module NestedSet
       def parent_id
         self[parent_column_name]
       end
-      
+
       # Value of the left column
       def left
         self[left_column_name]
@@ -117,28 +125,19 @@ module NestedSet
       def right
         self[right_column_name]
       end
-      
+
       def root?
         parent_id.nil?
       end
 
       # Returns root
-      def root # Todo: optimize
-        current_leaf = self
-        while(current_leaf.child?)
-          current_leaf = parent
-        end
-        current_leaf
+      def root
+        self_and_ancestors.first
       end
 
-      def optimized_root
-        self_and_ancestors.first
-        
-      end
-      
       # Returns the array of all parents and self
       def self_and_ancestors
-        nested_set_scope.scoped.where("#{q_left} <= ? AND #{q_right} >= ?", left, right)
+        nested_set_scope.where("#{q_left} <= ? AND #{q_right} >= ?", left, right)
       end
 
       # Returns true is this is a child node
@@ -147,14 +146,28 @@ module NestedSet
       end
 
       protected
+        def q_left
+          "#{self.class.quoted_table_name}.#{quoted_left_column_name}"
+        end
+
+        def q_right
+          "#{self.class.quoted_table_name}.#{quoted_right_column_name}"
+        end
+
+        def q_parent
+          "#{self.class.quoted_table_name}.#{quoted_parent_column_name}"
+        end
+        
         # All nested set queries should use this nested_set_scope, which performs finds on
         # the base ActiveRecord class, using the :scope declared in the acts_as_nested_set
         # declaration.
+        #
+        # :scope => [:notable_id, :notable_type]
+        # conditions = {:notable_id=>"self[notable_id]", :notable_type=>"self[notable_type]"}
         def nested_set_scope
-          conditions = Array(acts_as_nested_set_options[:scope]).inject({}) do |cnd, attr|
+          conditions = scope_column_names.inject({}) do |cnd, attr|
             cnd.merge attr => self[attr]
           end
-
           self.class.base_class.order(q_left).where(conditions)
         end
     end
