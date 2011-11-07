@@ -203,6 +203,14 @@ module NestedSet
         !parent_id.nil?
       end
 
+      def is_or_is_ancestor_of?(other)
+        other.self_and_ancestors.include? self
+      end
+      
+      def is_ancestor_of?(other)
+        other.ancestors.include? self
+      end
+      
       protected
         def q_left
           "#{self.class.quoted_table_name}.#{quoted_left_column_name}"

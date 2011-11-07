@@ -214,26 +214,19 @@ class NestedSetTest < ActiveSupport::TestCase
     assert_equal self_and_descendants, parent.self_and_descendants
     assert_equal self_and_descendants.count, parent.self_and_descendants.count
   end
-=end
+
   def test_descendents
     parent = categories(:top_level)
     descendants = [categories(:child_1), categories(:child_2),
       categories(:child_2_1), categories(:child_3)]
     assert_equal descendants, parent.descendants
   end
-=begin
+
   def test_children
     category = categories(:top_level)
     category.children.each {|c| assert_equal category.id, c.parent_id }
   end
-
-  def test_order_of_children
-    categories(:child_2).move_left
-    assert_equal categories(:child_2), categories(:top_level).children[0]
-    assert_equal categories(:child_1), categories(:top_level).children[1]
-    assert_equal categories(:child_3), categories(:top_level).children[2]
-  end
-
+=end
   def test_is_or_is_ancestor_of?
     assert categories(:top_level).is_or_is_ancestor_of?(categories(:child_1))
     assert categories(:top_level).is_or_is_ancestor_of?(categories(:child_2_1))
@@ -251,7 +244,7 @@ class NestedSetTest < ActiveSupport::TestCase
     assert !categories(:child_1).is_ancestor_of?(categories(:child_2))
     assert !categories(:child_1).is_ancestor_of?(categories(:child_1))
   end
-
+=begin
   def test_is_or_is_ancestor_of_with_scope
     root = ScopedCategory.root
     child = root.children.first
@@ -335,7 +328,14 @@ class NestedSetTest < ActiveSupport::TestCase
     assert_equal categories(:child_1), categories(:child_2).right_sibling
     assert Category.valid?
   end
-
+  
+  def test_order_of_children
+    categories(:child_2).move_left
+    assert_equal categories(:child_2), categories(:top_level).children[0]
+    assert_equal categories(:child_1), categories(:top_level).children[1]
+    assert_equal categories(:child_3), categories(:top_level).children[2]
+  end
+  
   def test_move_right
     categories(:child_2).move_right
     assert_nil categories(:child_2).right_sibling
