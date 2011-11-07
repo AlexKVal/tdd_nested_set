@@ -203,12 +203,19 @@ module NestedSet
         !parent_id.nil?
       end
 
+      def is_ancestor_of?(other)
+        self.left < other.left && other.left < self.right && same_scope?(other)
+      end
+
       def is_or_is_ancestor_of?(other)
-        other.self_and_ancestors.include? self
+        self.left <= other.left && other.left < self.right && same_scope?(other)
       end
       
-      def is_ancestor_of?(other)
-        other.ancestors.include? self
+      # Check if other model is in the same scope
+      def same_scope?(other)
+        scope_column_names.all? do |attr|
+          self.send(attr) == other.send(attr)
+        end
       end
       
       protected
