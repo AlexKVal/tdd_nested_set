@@ -192,6 +192,10 @@ module NestedSet
         descendants.where("#{q_right} - #{q_left} = 1")
       end
       
+      def level
+        ancestors.count
+      end
+      
       # Returns true is this is a child node
       def child?
         !parent_id.nil?
