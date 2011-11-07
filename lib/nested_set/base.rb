@@ -60,6 +60,10 @@ module NestedSet
           scope :roots, lambda {
             where(parent_column_name => nil).order(quoted_left_column_name)
           }
+          scope :leaves, lambda {
+            where("#{quoted_right_column_name} - #{quoted_left_column_name} = 1").
+            order(quoted_left_column_name)
+          }
         end
       end
     end
@@ -69,10 +73,7 @@ module NestedSet
       def root
         roots.first
       end
-      
-      def leaves
-        find(:all, :conditions => "#{right_column_name} - #{left_column_name} = 1")
-      end
+
     end
 
     # Mixed into both classes and instances to provide easy access to the column names
