@@ -136,6 +136,10 @@ module NestedSet
         self_and_ancestors.first
       end
 
+      def leaf?
+        !right.nil? && !left.nil? && (right - left) == 1
+      end
+      
       # Returns the array of all parents and self
       def self_and_ancestors
         nested_set_scope.where("#{q_left} <= ? AND #{q_right} >= ?", left, right)

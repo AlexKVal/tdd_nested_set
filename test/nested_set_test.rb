@@ -135,7 +135,7 @@ class NestedSetTest < ActiveSupport::TestCase
     assert Category.leaves.include?(categories(:child_3))
     assert Category.leaves.include?(categories(:top_level_2))
   end
-=begin
+
   def test_leaf
     assert categories(:child_1).leaf?
     assert categories(:child_2_1).leaf?
@@ -146,7 +146,7 @@ class NestedSetTest < ActiveSupport::TestCase
     assert !categories(:child_2).leaf?
     assert !Category.new.leaf?
   end
-
+=begin
   def test_parent
     assert_equal categories(:child_2), categories(:child_2_1).parent
   end
