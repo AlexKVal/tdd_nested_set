@@ -103,22 +103,60 @@ module NestedSet
     end
 
     module InstanceMethods
+      # Value of the parent column
+      def parent_id
+        self[parent_column_name]
+      end
+      
+      # Value of the left column
+      def left
+        self[left_column_name]
+      end
+
+      # Value of the right column
+      def right
+        self[right_column_name]
+      end
+      
       def root?
-        parent.nil?
+        parent_id.nil?
       end
 
       # Returns root
-      def root
+      def root # Todo: optimize
         current_leaf = self
         while(current_leaf.child?)
           current_leaf = parent
         end
         current_leaf
       end
-      
-      def child?
-        !parent.nil?
+
+      def optimized_root
+        self_and_ancestors.first
+        
       end
+      
+      # Returns the array of all parents and self
+      def self_and_ancestors
+        nested_set_scope.scoped.where("#{q_left} <= ? AND #{q_right} >= ?", left, right)
+      end
+
+      # Returns true is this is a child node
+      def child?
+        !parent_id.nil?
+      end
+
+      protected
+        # All nested set queries should use this nested_set_scope, which performs finds on
+        # the base ActiveRecord class, using the :scope declared in the acts_as_nested_set
+        # declaration.
+        def nested_set_scope
+          conditions = Array(acts_as_nested_set_options[:scope]).inject({}) do |cnd, attr|
+            cnd.merge attr => self[attr]
+          end
+
+          self.class.base_class.order(q_left).where(conditions)
+        end
     end
   end
 end
