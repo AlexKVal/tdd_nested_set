@@ -188,27 +188,17 @@ class NestedSetTest < ActiveSupport::TestCase
     leaves = [categories(:child_1), categories(:child_2_1), categories(:child_3)]
     assert_equal categories(:top_level).leaves, leaves
   end
-=end
+
   def test_level
     assert_equal 0, categories(:top_level).level
     assert_equal 1, categories(:child_1).level
     assert_equal 2, categories(:child_2_1).level
   end
-=begin
+
   def test_depth
     assert_equal nil, categories(:top_level).depth
     assert_equal 1, categories(:child_1).depth
     assert_equal 2, categories(:child_2_1).depth
-  end
-
-  def test_depth_after_move
-    assert_equal nil, categories(:top_level).depth
-    assert_equal 1, categories(:child_2).depth
-
-    categories(:top_level).move_to_child_of(categories(:top_level_2))
-
-    assert_equal 1, categories(:top_level).reload.depth
-    assert_equal 2, categories(:child_2).reload.depth
   end
 
   def test_has_children?
@@ -216,15 +206,15 @@ class NestedSetTest < ActiveSupport::TestCase
     assert !categories(:child_2).children.empty?
     assert !categories(:top_level).children.empty?
   end
-
+=end
   def test_self_and_descendents
     parent = categories(:top_level)
     self_and_descendants = [parent, categories(:child_1), categories(:child_2),
       categories(:child_2_1), categories(:child_3)]
     assert_equal self_and_descendants, parent.self_and_descendants
-    assert_equal self_and_descendants, parent.self_and_descendants.count
+    assert_equal self_and_descendants.count, parent.self_and_descendants.count
   end
-
+=begin
   def test_descendents
     lawyers = Category.create!(:name => "lawyers")
     us = Category.create!(:name => "United States")
@@ -395,7 +385,17 @@ class NestedSetTest < ActiveSupport::TestCase
     assert_equal categories(:child_3).id, categories(:child_1).parent_id
     assert Category.valid?
   end
+  
+  def test_depth_after_move
+    assert_equal nil, categories(:top_level).depth
+    assert_equal 1, categories(:child_2).depth
 
+    categories(:top_level).move_to_child_of(categories(:top_level_2))
+
+    assert_equal 1, categories(:top_level).reload.depth
+    assert_equal 2, categories(:child_2).reload.depth
+  end
+  
   def test_move_to_child_of_appends_to_end
     child = Category.create! :name => 'New Child'
     child.move_to_child_of categories(:top_level)

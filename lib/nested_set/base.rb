@@ -22,8 +22,8 @@ module NestedSet
           :left_column => "lft",
           :right_column => "rgt",
           :parent_column => "parent_id",
-          :depth_column => "depth",
-          :scope => nil
+          :depth_column => 'depth',
+          :dependent => :delete_all
         }.merge(options)
 
         if options[:scope].is_a?(Symbol) && options[:scope].to_s !~ /_id\z/
