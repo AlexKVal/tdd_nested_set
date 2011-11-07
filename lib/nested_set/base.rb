@@ -137,7 +137,7 @@ module NestedSet
       end
 
       def leaf?
-        !right.nil? && !left.nil? && (right - left) == 1
+        !new_record? && (right - left) == 1
       end
       
       # Returns the array of all parents and self
