@@ -19,7 +19,7 @@ class RenamedColumns < ActiveRecord::Base
 end
 
 class NestedSetTest < ActiveSupport::TestCase
-#=begin
+=begin
   def test_left_column_default
     assert_equal 'lft', Default.acts_as_nested_set_options[:left_column]
   end
@@ -161,23 +161,24 @@ class NestedSetTest < ActiveSupport::TestCase
     self_and_ancestors = [categories(:top_level), categories(:child_2), child]
     assert_equal self_and_ancestors, child.self_and_ancestors
   end
-#=end
+
   def test_ancestors
     child = categories(:child_2_1)
     ancestors = [categories(:top_level), categories(:child_2)]
     assert_equal ancestors, child.ancestors
   end
-=begin
+=end
   def test_self_and_siblings
     child = categories(:child_2)
-    self_and_siblings = [categories(:child_1), child, categories(:child_3)]
-    assert_equal self_and_siblings, child.self_and_siblings
-    assert_nothing_raised do
-      tops = [categories(:top_level), categories(:top_level_2)]
-      assert_equal tops, categories(:top_level).self_and_siblings
-    end
+#    self_and_siblings = [categories(:child_1), child, categories(:child_3)]
+#    assert_equal self_and_siblings, child.self_and_siblings
+puts child.self_and_siblings
+#    assert_nothing_raised do
+#      tops = [categories(:top_level), categories(:top_level_2)]
+#      assert_equal tops, categories(:top_level).self_and_siblings
+#    end
   end
-
+=begin
   def test_siblings
     child = categories(:child_2)
     siblings = [categories(:child_1), categories(:child_3)]

@@ -159,6 +159,11 @@ module NestedSet
           where("#{q_parent} = :id or #{q_primary_key} = :id", :id => id)
       end
 
+      # Returns the array of all children
+      def children
+        nested_set_scope.scoped.where("#{q_parent} = :id", :id => id)
+      end
+
       # Returns the array of all parents and self
       def self_and_ancestors
         nested_set_scope.where("#{q_left} <= ? AND #{q_right} >= ?", left, right)
@@ -167,6 +172,10 @@ module NestedSet
       # Returns an array of all parents
       def ancestors
         without_self self_and_ancestors
+      end
+
+      def self_and_siblings
+        root? ? self.class.roots : parent.children
       end
 
       # Returns a set of itself and all of its nested children
