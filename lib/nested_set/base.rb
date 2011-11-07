@@ -176,7 +176,7 @@ module NestedSet
       def siblings
         without_self self_and_siblings
       end
-      
+
       # Returns a set of itself and all of its nested children
       def self_and_descendants
         nested_set_scope.where("#{q_left} >= ? AND #{q_right} <= ?", left, right)
@@ -191,11 +191,13 @@ module NestedSet
       def leaves
         descendants.where("#{q_right} - #{q_left} = 1")
       end
-      
+
+      # Returns the level of this object in the tree
+      # root level is 0
       def level
-        ancestors.count
+        parent_id.nil? ? 0 : ancestors.count
       end
-      
+
       # Returns true is this is a child node
       def child?
         !parent_id.nil?
