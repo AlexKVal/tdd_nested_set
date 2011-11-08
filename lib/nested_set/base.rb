@@ -221,7 +221,12 @@ module NestedSet
 
       # Find the first sibling to the left
       def left_sibling
-        self_and_siblings.where("#{q_left} < :left AND #{q_right} < :left", :left => self.left).last
+        self_and_siblings.where("#{q_left} < :left AND #{q_right} < :left", :left => left).last
+      end
+
+      # Find the first sibling to the right
+      def right_sibling
+        self_and_siblings.where("#{q_left} > :right AND #{q_right} > :right", :right => right).first
       end
 
       # Check if other model is in the same scope

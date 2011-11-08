@@ -286,12 +286,12 @@ class NestedSetTest < ActiveSupport::TestCase
     child.update_attribute :organization_id, 'different'
     assert !child.same_scope?(root)
   end
-=end
+
   def test_left_sibling
     assert_equal categories(:child_1), categories(:child_2).left_sibling
     assert_equal categories(:child_2), categories(:child_3).left_sibling
   end
-=begin
+
   def test_left_sibling_of_root
     assert_nil categories(:top_level).left_sibling
   end
@@ -303,7 +303,7 @@ class NestedSetTest < ActiveSupport::TestCase
   def test_left_sibling_of_leftmost_node
     assert_nil categories(:child_1).left_sibling
   end
-
+=end
   def test_right_sibling
     assert_equal categories(:child_3), categories(:child_2).right_sibling
     assert_equal categories(:child_2), categories(:child_1).right_sibling
@@ -321,7 +321,7 @@ class NestedSetTest < ActiveSupport::TestCase
   def test_right_sibling_of_rightmost_node
     assert_nil categories(:child_3).right_sibling
   end
-
+=begin
   def test_move_left
     categories(:child_2).move_left
     assert_nil categories(:child_2).left_sibling
