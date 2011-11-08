@@ -219,6 +219,11 @@ module NestedSet
         self.left >= other.left && other.right >= self.right && same_scope?(other)
       end
 
+      # Find the first sibling to the left
+      def left_sibling
+        self_and_siblings.where("#{q_left} < :left AND #{q_right} < :left", :left => self.left).last
+      end
+
       # Check if other model is in the same scope
       def same_scope?(other)
         scope_column_names.all? do |attr|
